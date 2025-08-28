@@ -8,9 +8,11 @@ import '../presentation/rooftop_solar_calculator/rooftop_solar_calculator.dart';
 import '../presentation/phone_otp_authentication/phone_otp_authentication.dart';
 import '../presentation/enhanced_eligibility_checker/enhanced_eligibility_checker.dart';
 import '../presentation/site_survey_tool/site_survey_tool.dart';
+import '../presentation/application_form/application_form.dart';
+import '../presentation/installer_marketplace/installer_marketplace.dart';
+import '../presentation/profile/profile.dart';
 
 class AppRoutes {
-  // TODO: Add your routes here
   static const String initial = '/';
   static const String languageSelection = '/language-selection';
   static const String splash = '/splash-screen';
@@ -22,6 +24,9 @@ class AppRoutes {
   static const String enhancedEligibilityChecker =
       '/enhanced-eligibility-checker';
   static const String siteSurveyTool = '/site-survey-tool';
+  static const String applicationForm = '/application-form';
+  static const String installerMarketplace = '/installer-marketplace';
+  static const String profile = '/profile';
 
   static Map<String, WidgetBuilder> routes = {
     initial: (context) => const SplashScreen(),
@@ -34,6 +39,8 @@ class AppRoutes {
     phoneOtpAuthentication: (context) => const PhoneOtpAuthentication(),
     enhancedEligibilityChecker: (context) => const EnhancedEligibilityChecker(),
     siteSurveyTool: (context) => SiteSurveyTool(),
-    // TODO: Add your other routes here
+    applicationForm: (context) => const ApplicationForm(),
+    installerMarketplace: (context) => const InstallerMarketplace(),
+    profile: (context) => const Profile(),
   };
 }
