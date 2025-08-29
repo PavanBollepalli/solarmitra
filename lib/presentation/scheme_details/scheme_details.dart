@@ -340,8 +340,16 @@ class _SchemeDetailsState extends State<SchemeDetails> {
         duration: Duration(seconds: 3),
         behavior: SnackBarBehavior.floating,
         action: SnackBarAction(
-          label: 'View',
-          onPressed: () {},
+          label: 'Download',
+          onPressed: () {
+            // Simulate PDF download
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('PDF guide downloaded successfully!'),
+                backgroundColor: Colors.green,
+              ),
+            );
+          },
         ),
       ),
     );
@@ -392,10 +400,21 @@ class _SchemeDetailsState extends State<SchemeDetails> {
           ElevatedButton.icon(
             onPressed: () {
               Navigator.of(context).pop();
+              final schemeInfo = '${_schemeData['name']}\n\n'
+                  'Subsidy: ${_schemeData['subsidyAmount']}\n'
+                  'Benefits: Up to 60% savings on electricity bills\n\n'
+                  'Apply now through SolarMitra app!';
+              
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Opening WhatsApp...'),
+                  content: Text('Sharing scheme details on WhatsApp...'),
                   duration: Duration(seconds: 2),
+                  backgroundColor: Colors.green,
+                  action: SnackBarAction(
+                    label: 'View',
+                    textColor: Colors.white,
+                    onPressed: () {},
+                  ),
                 ),
               );
             },
@@ -464,32 +483,44 @@ class _SchemeDetailsState extends State<SchemeDetails> {
   }
 
   void _scheduleReminder(String option) {
+    // Get future date based on option
+    DateTime reminderDate;
+    switch (option) {
+      case 'Tomorrow':
+        reminderDate = DateTime.now().add(Duration(days: 1));
+        break;
+      case 'Next Week':
+        reminderDate = DateTime.now().add(Duration(days: 7));
+        break;
+      case 'Next Month':
+        reminderDate = DateTime.now().add(Duration(days: 30));
+        break;
+      default:
+        reminderDate = DateTime.now().add(Duration(days: 1));
+    }
+    
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Reminder set for $option'),
-        duration: Duration(seconds: 2),
+        content: Text('Reminder set for $option\nYou will be notified about ${_schemeData['name']}'),
+        duration: Duration(seconds: 3),
         behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.green,
         action: SnackBarAction(
-          label: 'OK',
-          onPressed: () {},
+          label: 'View',
+          textColor: Colors.white,
+          onPressed: () {
+            // Navigate to reminders page (future feature)
+          },
         ),
       ),
     );
   }
 
   void _startApplication() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Starting application process...'),
-        duration: Duration(seconds: 2),
-        behavior: SnackBarBehavior.floating,
-        action: SnackBarAction(
-          label: 'Continue',
-          onPressed: () {
-            // Navigate to application form or external portal
-          },
-        ),
-      ),
+    Navigator.pushNamed(
+      context,
+      '/application-form',
+      arguments: _schemeData['id'],
     );
   }
 }
